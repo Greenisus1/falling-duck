@@ -3,7 +3,8 @@
     "description": "",
     "dependencies": {
         "device": "*",
-        "animation": "*"
+        "animation": "*",
+        "multiplayer": "*"
     },
     "files": [
         "main.blocks",

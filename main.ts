@@ -6,6 +6,9 @@ enum ActionKind {
 namespace SpriteKind {
     export const Gap = SpriteKind.create()
 }
+function Load (Player1: Sprite) {
+    mp.setPlayerSprite(mp.playerSelector(mp.PlayerNumber.One), Player1)
+}
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.vy = -100
     animation.setAction(mySprite, ActionKind.Jumping)
@@ -27,9 +30,8 @@ let topImage: Image = null
 let gap = 0
 let mySprite: Sprite = null
 scene.setBackgroundColor(9)
-info.setScore(0)
 effects.blizzard.startScreenEffect()
-mySprite = sprites.create(img`
+let Player1 = sprites.create(img`
     . . . . . . . . . . b 5 b . . . 
     . . . . . . . . . b 5 b . . . . 
     . . . . . . . . . b c . . . . . 
@@ -49,24 +51,6 @@ mySprite = sprites.create(img`
     `, SpriteKind.Player)
 mySprite.ay = 300
 let anim = animation.createAnimation(ActionKind.Jumping, 25)
-anim.addAnimationFrame(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . b 5 5 b . . . 
-    . . . . . . b b b b b b . . . . 
-    . . . . . b b 5 5 5 5 5 b . . . 
-    . b b b b b 5 5 5 5 5 5 5 b . . 
-    . b d 5 b 5 5 5 5 5 5 5 5 b . . 
-    . . b 5 5 b 5 d 1 f 5 d 4 f . . 
-    . . b d 5 5 b 1 f f 5 4 4 c . . 
-    b b d b 5 5 5 d f b 4 4 4 4 b . 
-    b d d c d 5 5 b 5 4 4 4 4 4 4 b 
-    c d d d c c b 5 5 5 5 5 5 5 b . 
-    c b d d d d d 5 5 5 5 5 5 5 b . 
-    . c d d d d d d 5 5 5 5 5 d b . 
-    . . c b d d d d d 5 5 5 b b . . 
-    . . . c c c c c c c c b b . . . 
-    `)
 anim.addAnimationFrame(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . b 5 b . . . 
@@ -157,7 +141,8 @@ anim.addAnimationFrame(img`
     . . . c c c c c c c c b b . . . 
     . . . . . . . . . . . . . . . . 
     `)
-animation.attachAnimation(mySprite, anim)
+animation.attachAnimation(Player1, anim)
+info.setScore(0)
 game.onUpdate(function () {
     if (mySprite.vy > 0) {
         animation.setAction(mySprite, ActionKind.Idle)
